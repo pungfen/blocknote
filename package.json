@@ -1,9 +1,16 @@
 {
   "name": "@pungfe/blocknote",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "",
-  "license": "ISC",
-  "author": "",
+  "bugs": {
+    "url": "https://github.com/pungfen/blocknote/issues"
+  },
+  "license": "MIT",
+  "author": "pungfen <fp94214@gmail.com> (https://github.com/pungfen/)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pungfen/blocknote.git"
+  },
   "files": [
     "dist"
   ],
@@ -16,6 +23,9 @@
     },
     "./style.css": "./dist/blocknote.css"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "vite build",
     "dev": "vite",
@@ -23,6 +33,7 @@
     "fmt:check": "oxfmt --check",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "release": "bumpp",
     "test": "vitest"
   },
   "dependencies": {
