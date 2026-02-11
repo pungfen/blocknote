@@ -18,7 +18,8 @@ const { theme = 'light', onUploadFile } = defineProps<{
 }>()
 const NoteView = applyPureReactInVue(BlockNoteView)
 
-const html = defineModel<string>('html')
+const lossyHtml = defineModel<string>('html')
+const fullHtml = defineModel<string>('fullHtml')
 
 const editor = shallowRef<BlockNoteEditor | null>(null)
 
@@ -33,21 +34,21 @@ onBeforeUnmount(() => {
 })
 
 watchEffect(() => {
-  if (editor.value && editor.value.isEmpty && html.value) {
-    const blocks = editor.value.tryParseHTMLToBlocks(html.value)
+  if (editor.value && editor.value.isEmpty) {
+    const blocks = editor.value.tryParseHTMLToBlocks(fullHtml.value ?? lossyHtml.value ?? '')
     editor.value.replaceBlocks(editor.value.document, blocks)
   }
 })
 
 const change = () => {
-  html.value = editor.value?.blocksToHTMLLossy(editor.value.document)
+  lossyHtml.value = editor.value?.blocksToHTMLLossy(editor.value.document)
+  fullHtml.value = editor.value?.blocksToFullHTML(editor.value.document)
 }
 
 defineExpose({
   undo: () => editor.value?.undo(),
   redo: () => editor.value?.redo(),
-  focus: () => editor.value?.focus(),
-  tryParseHTMLToBlocks: (html: string) => editor.value?.tryParseHTMLToBlocks(html)
+  focus: () => editor.value?.focus()
 })
 </script>
 
